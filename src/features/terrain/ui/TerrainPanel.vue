@@ -25,5 +25,8 @@ defineEmits<{ paint: [terrain: Terrain | null] }>();
         >
       </button>
     </div>
+    <p class="terrain-note">
+      积水会让移动额外 +1，淹没 +2；断崖无法蓄水，也不接受排水口。
+    </p>
   </section>
 </template>

@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import type { Unit } from "../../../shared/types";
 import { skillBook } from "../model/skills";
-defineProps<{ unit: Unit; skill: string; locked: boolean; notice: string }>();
+defineProps<{
+  unit: Unit;
+  skill: string;
+  locked: boolean;
+  notice: string;
+  rescue: { job: string; cost: number; label: string } | null;
+  depth: number;
+  fireScale: number;
+}>();
 defineEmits<{ skill: [id: string]; wait: [] }>();
 </script>
 <template>
@@ -16,6 +24,11 @@ defineEmits<{ skill: [id: string]; wait: [] }>();
     </h3>
     <p class="instruction">
       点击蓝色格移动；选择技能后点击目标。双方均由你指挥。
+    </p>
+    <p v-if="depth > 0" class="water-readout">
+      脚下积水 {{ depth.toFixed(1) }}
+      <em v-if="rescue">{{ rescue.label }}</em>
+      <em v-if="fireScale < 1">火焰伤害 ×{{ fireScale.toFixed(2) }}</em>
     </p>
     <div class="skills">
       <button

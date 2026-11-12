@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { BattleMap, TerrainPanel } from "../features/terrain";
 import { RosterPanel } from "../features/roster";
 import { ActionPanel } from "../features/tactics";
 import { TurnOrder } from "../features/initiative";
 import { ReplayPanel, downloadArchive } from "../features/replay";
+import { WeatherPanel } from "../features/weather";
 import { key } from "../shared/document";
 import { useWorkspace } from "./workspace";
 const {
@@ -12,6 +14,7 @@ const {
   selected,
   skill,
   brush,
+  outletMode,
   notice,
   battle,
   actor,
@@ -19,12 +22,23 @@ const {
   routes,
   targets,
   path,
+  trailKind,
   playback,
+  forecast,
+  rescue,
+  fireScale,
+  actorDepth,
+  weather,
+  outlets,
+  depthInfo,
+  rain,
+  toggleWeather,
   cell,
   wait,
   seek,
   reset,
 } = useWorkspace();
+const forecastList = computed(() => forecast.value?.depth ?? null);
 </script>
 <template>
   <main>
@@ -34,7 +48,8 @@ const {
         <div>灰烬渡口<small>ASHEN CROSSING / TACTICS LAB</small></div></a
       >
       <nav>
-        <span class="nav-active">战术指挥台</span><span>本地演练 / 07</span>
+        <span class="nav-active">战术指挥台</span
+        ><span>{{ weather ? "暴雨预警 / 07" : "本地演练 / 07" }}</span>
       </nav>
       <button @click="reset">↻ 重新部署</button>
     </header>
@@ -53,7 +68,7 @@ const {
     <div class="workspace">
       <aside>
         <RosterPanel
-          :units="battle.units"
+          :battle="battle"
           :selected="selected"
           :active="battle.active"
           @select="selected = $event"
@@ -63,6 +78,7 @@ const {
           @paint="
             brush = $event;
             skill = '';
+            outletMode = false;
           "
         />
       </aside>
@@ -73,11 +89,22 @@ const {
           :routes="[...routes.keys()]"
           :targets="targets.map(key)"
           :path="path"
+          :trail-kind="trailKind"
+          :forecast="forecastList"
+          :outlets="outlets"
           @cell="cell"
         />
         <div class="field-note">
           <span>✦ 战场提示</span>
-          <p>
+          <p v-if="weather">
+            积水每轮按上一轮沉积分水位统一扩散；涉水移动 +1，淹没 +2 且需先支付脱困代价。
+            火焰命中受潮目标衰减 60%，命中积水会蒸发部分水。
+            <b>{{ depthInfo?.wetted ?? 0 }}</b> 人受潮、<b
+              >{{ depthInfo?.submerged ?? 0 }}</b
+            >
+            人淹没。
+          </p>
+          <p v-else>
             密林提供 3 点掩护；高地攻击 +2；迟缓减少 2
             点移动；灼烧在自身行动结束时结算。
           </p>
@@ -89,11 +116,23 @@ const {
           :skill="skill"
           :locked="locked"
           :notice="notice"
+          :rescue="rescue"
+          :depth="actorDepth"
+          :fire-scale="fireScale"
           @skill="
             skill = $event;
             brush = null;
+            outletMode = false;
           "
           @wait="wait"
+        /><WeatherPanel
+          :battle="battle"
+          :locked="locked"
+          :outlet-mode="outletMode"
+          :forecast="forecast"
+          @rain="rain"
+          @toggle="toggleWeather"
+          @outlet-mode="outletMode = $event"
         /><ReplayPanel
           :events="session.events"
           :cursor="cursor"

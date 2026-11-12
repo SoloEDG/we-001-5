@@ -38,7 +38,8 @@ export const skillBook: Record<Profession, Skill[]> = {
       power: 4,
       target: "enemy",
       status: "burn",
-      description: "命中并灼烧，持续 2 次自身行动",
+      element: "fire",
+      description: "命中并灼烧；目标受潮时火焰减弱，命中积水会蒸发部分水量",
     },
   ],
   medic: [

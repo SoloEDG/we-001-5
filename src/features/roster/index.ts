@@ -6,4 +6,5 @@ export {
   armorValue,
   tickStatuses,
   statusNames,
+  fireMultiplier,
 } from "./lib/status";

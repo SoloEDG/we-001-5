@@ -2,13 +2,23 @@
 import type { BattleEvent } from "../../../shared/types";
 defineProps<{ events: BattleEvent[]; cursor: number; playing: boolean }>();
 defineEmits<{ seek: [cursor: number]; play: []; stop: []; download: [] }>();
+const glyph = (kind: BattleEvent["kind"]) =>
+  kind === "move"
+    ? "↗"
+    : kind === "skill"
+      ? "✧"
+      : kind === "terrain"
+        ? "△"
+        : kind === "weather"
+          ? "☂"
+          : kind === "flood"
+            ? "≈"
+            : "→";
 </script>
 <template>
   <section class="panel replay-panel">
     <div class="eyebrow">04 / BATTLE ARCHIVE</div>
-    <h3>
-      战斗回放 <small>{{ events.length }} 步记录</small>
-    </h3>
+    <h3>战斗回放 <small>{{ events.length }} 步记录</small></h3>
     <div class="replay-tools">
       <button @click="playing ? $emit('stop') : $emit('play')">
         {{ playing ? "Ⅱ 暂停" : "▶ 播放" }}</button
@@ -29,20 +39,11 @@ defineEmits<{ seek: [cursor: number]; play: []; stop: []; download: [] }>();
       ><button
         v-for="(e, i) in events"
         :key="e.id"
-        :class="{ chosen: cursor === i + 1 }"
+        :class="{ chosen: cursor === i + 1, flood: e.kind === 'flood' }"
         @click="$emit('seek', i + 1)"
       >
         <small>{{ String(e.id).padStart(2, "0") }}</small
-        >{{ e.label
-        }}<span>{{
-          e.kind === "move"
-            ? "↗"
-            : e.kind === "skill"
-              ? "✧"
-              : e.kind === "terrain"
-                ? "△"
-                : "→"
-        }}</span>
+        >{{ e.label }}<span>{{ glyph(e.kind) }}</span>
       </button>
     </div>
   </section>

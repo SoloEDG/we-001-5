@@ -1,9 +1,10 @@
 import type { Battle, Point, Terrain, Tile } from "../../../shared/types";
 import { key } from "../../../shared/document";
+import { GRID_WIDTH, TILE_COUNT } from "../../../shared/water";
 export function createMap(): Tile[] {
-  return Array.from({ length: 96 }, (_, i) => {
-    const x = i % 12,
-      y = Math.floor(i / 12);
+  return Array.from({ length: TILE_COUNT }, (_, i) => {
+    const x = i % GRID_WIDTH,
+      y = Math.floor(i / GRID_WIDTH);
     const terrain: Terrain =
       x === 6 && y !== 3 && y !== 4
         ? "water"
@@ -24,3 +25,5 @@ export function paintTile(b: Battle, p: Point, terrain: Terrain) {
   if (!tile) throw new Error("地图外坐标");
   tile.terrain = terrain;
 }
+export const tileAt = (b: Battle, p: Point) =>
+  b.tiles.find((t) => key(t) === key(p));

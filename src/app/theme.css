@@ -629,3 +629,191 @@ footer b {
     font-size: 8px;
   }
 }
+/* ---- 暴雨与积水 ---- */
+.tile.damp {
+  background: #33544b;
+}
+.tile.damp.plain {
+  background: #33544b;
+}
+.tile.submerged {
+  background: #244850;
+}
+.tile.submerged .ground {
+  color: #bfe0d966;
+}
+.tile.predict-rise {
+  box-shadow: inset 0 0 0 1px #9fc8c4cc;
+}
+.tile.predict-submerge {
+  box-shadow: inset 0 0 0 2px #7db6c4;
+}
+.flood {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(#5d9ea0aa, #2f6b76cc);
+  border-top: 1px solid #a9d7d9a0;
+  pointer-events: none;
+  z-index: 0;
+}
+.outlet-mark {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  color: #e4ce8d;
+  font-size: 12px;
+  z-index: 2;
+}
+.forecast-mark {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  color: #bfe3e0;
+  font-size: 11px;
+  z-index: 2;
+}
+.forecast-mark.severe {
+  color: #a8dbe8;
+  font-weight: 700;
+}
+.pawn.wet {
+  box-shadow: 0 0 0 2px #7fc1c9;
+}
+.pawn.drowned {
+  box-shadow: 0 0 0 2px #5e9db1, inset 0 0 12px #00000088;
+  filter: saturate(0.6);
+}
+.unit-row.damp {
+  border-left: 2px solid #79b6b6;
+}
+.unit-row.submerged {
+  border-left: 2px solid #5b93a8;
+  background: #1f3336;
+}
+.water-tag {
+  display: inline-block;
+  font-style: normal;
+  font-size: 8px;
+  padding: 0 3px;
+  margin-left: 4px;
+  border: 1px solid #6c9fa8;
+  color: #a9d3d5;
+  border-radius: 2px;
+}
+.water-tag.submerged {
+  color: #9dc8e0;
+  border-color: #5e8ca8;
+}
+.rain-levels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.rain-levels button {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  font-size: 10px;
+  padding: 6px;
+}
+.rain-levels button small {
+  font-size: 8px;
+  color: #85a0a0;
+}
+.weather-hint {
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 12px 0;
+}
+.weather-hint b {
+  color: #cfe4e0;
+}
+.forecast-box {
+  border: 1px solid #3c5552;
+  background: #1b2b2b;
+  padding: 10px;
+}
+.forecast-box p {
+  font-size: 11px;
+  margin: 6px 0;
+  color: #cfe4dd;
+}
+.forecast-box small,
+.outlet-box small {
+  font-size: 9px;
+  line-height: 1.5;
+  color: #7e9a95;
+}
+.outlet-box {
+  border-top: 1px solid #33453f;
+  margin-top: 12px;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.outlet-box button {
+  font-size: 10px;
+  padding: 6px 8px;
+  align-self: flex-start;
+}
+.outlet-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.outlet-box li {
+  font-size: 9px;
+  color: #b7cbc3;
+  display: flex;
+  justify-content: space-between;
+}
+.outlet-box em {
+  font-style: normal;
+  color: #86a7a3;
+}
+.water-readout {
+  border: 1px solid #3d5754;
+  background: #1b2c2b;
+  font-size: 10px;
+  padding: 8px;
+  margin: 0 0 12px;
+  color: #bcdad4;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.water-readout em {
+  font-style: normal;
+  color: #d9c58c;
+}
+.terrain-note {
+  font-size: 9px;
+  line-height: 1.6;
+  border-top: 1px solid #2f4037;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+.event-list button.flood {
+  border-left: 2px solid #6aa8b4;
+  background: #1c2e30;
+}
+.event-list button.flood span {
+  color: #9ecbd3;
+}
+.ghost {
+  margin-top: 10px;
+  width: 100%;
+  font-size: 10px;
+  background: transparent;
+}
+.tile.flood-trail {
+  box-shadow: inset 0 0 0 2px #9edbe4;
+  background: #2a4d58;
+}

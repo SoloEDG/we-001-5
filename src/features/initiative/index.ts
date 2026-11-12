@@ -1,3 +1,4 @@
 export { default as TurnOrder } from "./ui/TurnOrder.vue";
 export { order } from "./lib/order";
-export { finishTurn } from "./model/turns";
+export { finishTurn, type TurnEnd } from "./model/turns";
+export { turnLabel, turnProgress } from "./model/clock";
